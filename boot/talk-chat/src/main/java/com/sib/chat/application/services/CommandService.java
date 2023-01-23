@@ -1,5 +1,6 @@
 package com.sib.chat.application.services;
 
+import com.sib.chat.application.port.out.cache.CashingChannelPort;
 import com.sib.chat.application.port.out.persistence.CreateChatPort;
 import com.sib.chat.application.usecase.CreateChatUseCase;
 import com.sib.chat.application.usecase.DeleteChatUseCase;
@@ -18,13 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommandService implements CreateChatUseCase, DeleteChatUseCase {
 
     private final CreateChatPort createPort;
+    private final CashingChannelPort cashingPort;
 
     @Override
     public Response.Create create(Request.Create request) {
-        Chat chat = ChatFactory.create(request);
-        Chat entity = createPort.create(chat);
+        Chat saved = createPort.create(ChatFactory.create(request));
 
-        return new Response.Create(entity.getId(), entity.getChannel().getId());
+        Long channelId = saved.getChannel().getId();
+        cashingPort.cashing(channelId);
+
+        return new Response.Create(saved.getId(), channelId);
     }
 
     @Override
