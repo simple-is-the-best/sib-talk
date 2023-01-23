@@ -5,7 +5,7 @@
 PROFILE ?= local
 GIT_CURRENT_BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
-LOCAL_DB_PORT ?= 5999
+LOCAL_DB_PORT ?= 27017
 LOCAL_DB_NAME ?= sib-talk
 LOCAL_DB_PASSWORD ?= sib-talk
 LOCAL_DB_USER := $(LOCAL_DB_NAME)
@@ -43,12 +43,11 @@ endif
 start-db: ## Start DB Docker Container
 ifneq ($(RUNNING_DB_CONTAINER),$(LOCAL_DB_CONTAINER))
 	@docker run --rm --name $(LOCAL_DB_CONTAINER) -d \
-	-v ${PWD}/schema:/docker-entrypoint-initdb.d \
-	-p $(LOCAL_DB_PORT):5432 \
-	-e POSTGRES_PASSWORD="$(LOCAL_DB_PASSWORD)" \
-	-e POSTGRES_USER="$(LOCAL_DB_USER)" \
-	-e POSTGRES_DB="$(LOCAL_DB_NAME)"  \
-	postgres:13-alpine
+	-p $(LOCAL_DB_PORT):27017 \
+	-e MONGO_INITDB_ROOT_PASSWORD="$(LOCAL_DB_PASSWORD)" \
+	-e MONGO_INITDB_ROOT_USERNAME="$(LOCAL_DB_USER)" \
+	-e MONGO_INITDB_ROOT_DATABASE="$(LOCAL_DB_NAME)"  \
+	mongo:6.0
 else
 	@echo "DB($(LOCAL_DB_CONTAINER)) is Already running."
 endif

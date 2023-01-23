@@ -1,1 +1,17 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      authentication-database: admin
+      username: sib-talk
+      password: sib-talk
+      database: sib-talk
+      auto-index-creation: true
 
+    redis:
+      host: localhost
+      port: 6379
+      username:
+      password:
+      ssl: false
