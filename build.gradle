@@ -1,0 +1,7 @@
+group = 'com.sib'
+version = '0.0.1'
+
+task initHooksPath(type:Exec) {
+    commandLine 'echo', 'hello'
+    commandLine 'git', 'config', 'core.hooksPath','.githooks'
+}
