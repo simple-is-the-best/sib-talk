@@ -2,7 +2,7 @@ package com.sib.chat.application.services;
 
 import com.sib.chat.domain.Channel;
 import com.sib.chat.domain.Message;
-import generator.IdGenerator;
+import com.sib.utils.generator.IdGenerator;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

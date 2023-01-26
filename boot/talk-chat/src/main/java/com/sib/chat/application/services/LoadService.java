@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class LoadService implements LoadChatUseCase {
 
     @Override
-    public void load(Long userId, Long chatId) {
+    public void load(Long chatId) {
 
     }
 

@@ -15,3 +15,7 @@ spring:
       username:
       password:
       ssl: false
+
+message:
+  server:
+    end-point: ws://localhost:8101

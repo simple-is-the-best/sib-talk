@@ -1,4 +1,4 @@
-package generator;
+package com.sib.utils.generator;
 
 import java.net.NetworkInterface;
 import java.security.SecureRandom;

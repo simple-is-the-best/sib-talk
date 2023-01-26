@@ -7,6 +7,9 @@ import com.sib.chat.application.usecase.dto.Request;
 import com.sib.chat.application.usecase.dto.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -20,9 +23,12 @@ public class CommandChatController {
     private final ConnectChatUseCase connectUseCase;
 
     @PutMapping("/chat")
-    public void create(@RequestBody Request.Create request) {
+    public ResponseEntity<Object> create(@RequestBody Request.Create request) {
         Response.Create created = createUseCase.create(request);
-        connectUseCase.connect();
+
+        HttpHeaders connectHeaders = connectUseCase.getRedirectHeaders(created.getChannelId());
+
+        return new ResponseEntity<>(connectHeaders, HttpStatus.MOVED_PERMANENTLY);
     }
 
     @DeleteMapping("/chat/{chatId}")
@@ -32,6 +38,6 @@ public class CommandChatController {
 
     @PostMapping("/chat")
     public void connect() {
-        connectUseCase.connect();
+        connectUseCase.getRedirectHeaders(null);
     }
 }

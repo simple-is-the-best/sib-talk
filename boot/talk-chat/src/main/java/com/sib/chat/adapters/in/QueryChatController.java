@@ -16,12 +16,12 @@ public class QueryChatController {
 
     private final LoadChatUseCase loadUseCase;
 
-    @GetMapping("/users/{userId}/chat/{chatId}/")
-    public void load(@PathVariable Long userId, @PathVariable Long chatId) {
-        loadUseCase.load(userId, chatId);
+    @GetMapping("/chat/{chatId}")
+    public void load(@PathVariable Long chatId) {
+        loadUseCase.load(chatId);
     }
 
-    @GetMapping("/users/{userId}/chats")
+    @GetMapping("/chats/users/{userId}")
     public void loadAll(@PathVariable Long userId) {
         loadUseCase.loadAll(userId);
     }

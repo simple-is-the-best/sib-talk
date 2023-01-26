@@ -4,7 +4,7 @@ import com.sib.chat.application.usecase.dto.Request;
 import com.sib.chat.domain.Channel;
 import com.sib.chat.domain.Chat;
 import com.sib.chat.domain.Status;
-import generator.IdGenerator;
+import com.sib.utils.generator.IdGenerator;
 
 import java.time.LocalDateTime;
 

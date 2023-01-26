@@ -1,7 +1,9 @@
 package com.sib.chat.application.usecase;
 
+import org.springframework.http.HttpHeaders;
+
 public interface ConnectChatUseCase {
 
-    void connect();
+    HttpHeaders getRedirectHeaders(Long channelId);
     void disConnect();
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class ChatPersistenceAdapter implements CreateChatPort {
+public class SpringMongoPersistenceAdapter implements CreateChatPort {
 
     private final ChatRepository repository;
 
