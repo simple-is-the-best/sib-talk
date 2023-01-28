@@ -23,12 +23,12 @@ public class CommandChatController {
     private final ConnectChatUseCase connectUseCase;
 
     @PutMapping("/chat")
-    public ResponseEntity<Object> create(@RequestBody Request.Create request) {
+    public ResponseEntity<Response.Create> create(@RequestBody Request.Create request) {
         Response.Create created = createUseCase.create(request);
 
         HttpHeaders connectHeaders = connectUseCase.getRedirectHeaders(created.getChannelId());
 
-        return new ResponseEntity<>(connectHeaders, HttpStatus.MOVED_PERMANENTLY);
+        return new ResponseEntity<>(created, connectHeaders, HttpStatus.PERMANENT_REDIRECT);
     }
 
     @DeleteMapping("/chat/{chatId}")
