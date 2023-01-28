@@ -20,8 +20,7 @@ public class RedisCacheAdapter implements CacheChannelPort {
     private final ObjectMapper mapper;
     private final String KEY_PREFIX = "channel:";
 
-    @Override
-    public void caching(Long channelId) {
+    public void setChannel(Long channelId) {
         ZSetOperations<String, String> zSet = redisTemplate.opsForZSet();
         LocalDateTime now = LocalDateTime.now();
         long score = now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();

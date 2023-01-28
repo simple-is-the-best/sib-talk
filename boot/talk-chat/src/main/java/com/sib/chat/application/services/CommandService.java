@@ -19,14 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommandService implements CreateChatUseCase, DeleteChatUseCase {
 
     private final CreateChatPort createPort;
-    private final CacheChannelPort cacheChannelPort;
+    private final CacheChannelPort cachePort;
 
     @Override
     public Response.Create create(Request.Create request) {
         Chat saved = createPort.create(ChatFactory.create(request));
 
         Long channelId = saved.getChannel().getId();
-        cacheChannelPort.caching(channelId);
+        cachePort.setChannel(channelId);
 
         return new Response.Create(saved.getId(), channelId);
     }

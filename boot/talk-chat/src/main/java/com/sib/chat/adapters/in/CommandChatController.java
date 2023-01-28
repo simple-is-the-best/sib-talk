@@ -26,9 +26,7 @@ public class CommandChatController {
     public ResponseEntity<Response.Create> create(@RequestBody Request.Create request) {
         Response.Create created = createUseCase.create(request);
 
-        HttpHeaders connectHeaders = connectUseCase.getRedirectHeaders(created.getChannelId());
-
-        return new ResponseEntity<>(created, connectHeaders, HttpStatus.PERMANENT_REDIRECT);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @DeleteMapping("/chat/{chatId}")
@@ -37,7 +35,11 @@ public class CommandChatController {
     }
 
     @PostMapping("/chat")
-    public void connect() {
-        connectUseCase.getRedirectHeaders(null);
+    public ResponseEntity<Response.Connect> connect(@RequestBody Request.Connect request) {
+        Long channelId = request.getChannelId();
+        HttpHeaders socketHeaders = connectUseCase.upgradeSocketHeaders(channelId);
+
+        Response.Connect connected = new Response.Connect(request.getUserId(), channelId);
+        return new ResponseEntity<>(connected, socketHeaders, HttpStatus.PERMANENT_REDIRECT);
     }
 }

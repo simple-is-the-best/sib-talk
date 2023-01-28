@@ -20,15 +20,14 @@ public class ConnectService implements ConnectChatUseCase {
     private final String CONNECT_PATH = "/";
 
     @Override
-    public HttpHeaders getRedirectHeaders(Long channelId)  {
+    public HttpHeaders upgradeSocketHeaders(Long channelId)  {
         URI redirectUri;
         try {
             redirectUri = new URI(CONNECT_URI);
         } catch (Exception e) {
             throw new RuntimeException("Message Server Connection Fail::ChannelId::"+channelId);
         }
-
-        return generateHeaders(channelId, redirectUri);
+        return generateWebSocketHeaders(channelId, redirectUri);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class ConnectService implements ConnectChatUseCase {
 
     }
 
-    private HttpHeaders generateHeaders(Long channelId, URI redirectUri) {
+    private HttpHeaders generateWebSocketHeaders(Long channelId, URI redirectUri) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(redirectUri);
         httpHeaders.setConnection("Upgrade");
