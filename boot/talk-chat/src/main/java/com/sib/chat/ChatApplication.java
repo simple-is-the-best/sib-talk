@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @EnableMongoAuditing
 @EnableMongoRepositories
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.sib")
 public class ChatApplication {
 
     public static void main(String[] args) {

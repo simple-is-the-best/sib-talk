@@ -2,5 +2,7 @@ rootProject.name = 'sib-talk'
 
 include 'boot:talk-chat'
 include 'boot:talk-message'
+include 'boot:talk-cache'
 include 'commons'
+findProject(':boot:talk-cache')?.name = 'talk-cache'
 

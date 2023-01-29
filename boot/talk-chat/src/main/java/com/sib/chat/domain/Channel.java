@@ -18,6 +18,6 @@ public class Channel {
     private Long id;
     private String title;
     private List<Long> receiverIds;
-    private List<Message> messages;
+    private List<ChatMessage> chatMessages;
     private LocalDateTime createdAt;
 }

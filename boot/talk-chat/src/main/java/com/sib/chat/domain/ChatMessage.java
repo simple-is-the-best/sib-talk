@@ -5,7 +5,7 @@ import lombok.Value;
 import java.time.LocalDateTime;
 
 @Value(staticConstructor = "of")
-public class Message {
+public class ChatMessage {
     Long id;
     Type type;
     Long channelId;

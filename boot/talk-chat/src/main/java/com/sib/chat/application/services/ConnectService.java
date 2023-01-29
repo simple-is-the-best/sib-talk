@@ -16,14 +16,12 @@ import java.net.URI;
 public class ConnectService implements ConnectChatUseCase {
 
     private final EndpointConfig endpoint;
-    private final String CONNECT_URI = this.endpoint.getMessageUri() + this.CONNECT_PATH;
-    private final String CONNECT_PATH = "/";
 
     @Override
     public HttpHeaders upgradeSocketHeaders(Long channelId)  {
         URI redirectUri;
         try {
-            redirectUri = new URI(CONNECT_URI);
+            redirectUri = new URI(endpoint.getChatMessageURI());
         } catch (Exception e) {
             throw new RuntimeException("Message Server Connection Fail::ChannelId::"+channelId);
         }

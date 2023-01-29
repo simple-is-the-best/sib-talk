@@ -9,5 +9,5 @@ import org.springframework.context.annotation.Configuration;
 public class EndpointConfig {
 
     @Value("${message.server.end-point}")
-    private String messageUri;
+    private String chatMessageURI;
 }
