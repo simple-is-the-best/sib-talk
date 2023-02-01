@@ -1,7 +1,7 @@
 package com.sib.chat.application.services;
 
 import com.sib.chat.domain.Channel;
-import com.sib.chat.domain.ChatMessage;
+import com.sib.vo.message.ChatMessage;
 import com.sib.utils.generator.IdGenerator;
 
 import java.time.LocalDateTime;

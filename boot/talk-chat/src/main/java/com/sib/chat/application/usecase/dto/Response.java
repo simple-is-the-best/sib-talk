@@ -1,7 +1,7 @@
 package com.sib.chat.application.usecase.dto;
 
 import com.sib.chat.domain.Channel;
-import com.sib.chat.domain.ChatMessage;
+import com.sib.vo.message.ChatMessage;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,5 +1,6 @@
 package com.sib.chat.domain;
 
+import com.sib.vo.message.ChatMessage;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

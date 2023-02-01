@@ -3,38 +3,47 @@ package com.sib.cache.redis.adapters.out;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sib.cache.redis.RedisUtils;
 import com.sib.cache.redis.application.port.out.ChannelCachePort;
-import com.sib.cache.redis.config.RedisKey;
+import com.sib.cache.redis.application.port.out.TopicCachePort;
+import com.sib.vo.message.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class RedisCacheAdapter implements ChannelCachePort {
+public class RedisCacheAdapter implements ChannelCachePort , TopicCachePort {
 
     private final RedisUtils redisUtils;
     private final ObjectMapper mapper;
 
     @Override
     public void setChannel(Long channelId) {
+        ZSetOperations<String, String> zSet = redisUtils.opsForZSet();
         try {
-            redisUtils.zAdd(channelKeyGen(channelId), "", scoreGen());
+            zSet.add(redisUtils.channelKey(channelId), "", redisUtils.timeScore());
         } catch (Exception e) {
-            log.error("Redis Cashing Failure::Redis Key:{}::Error Message:{}",channelKeyGen(channelId), e.getMessage());
+            log.error("Redis Cashing Failure::Redis Key:{}::Error Message:{}", channelId, e.getMessage());
         }
     }
 
-    private double scoreGen() {
-        LocalDateTime now = LocalDateTime.now();
-        return now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    @Override
+    public void addMessage(Long channelId, ChatMessage message) {
+        ZSetOperations<String, String> zSet = redisUtils.opsForZSet();
+        try {
+            String rawMessage = mapper.writeValueAsString(message);
+            zSet.add(redisUtils.channelKey(channelId), rawMessage, redisUtils.timeScore());
+        } catch (Exception e) {
+            log.error("Redis SetMessage Failure::ChannelId:{}::Message:{}::Error Message:{}",
+                    channelId, message, e.getMessage());
+        }
     }
 
-    private String channelKeyGen(Long id) {
-        return RedisKey.PREFIX_CHANNEL + id;
+    @Override
+    public void setTopic(Object delegate, String method, Long channelId) {
+        ChannelTopic topic = ChannelTopic.of(redisUtils.channelKey(channelId));
+        redisUtils.setAdapterTopic(delegate, method, topic);
     }
 }

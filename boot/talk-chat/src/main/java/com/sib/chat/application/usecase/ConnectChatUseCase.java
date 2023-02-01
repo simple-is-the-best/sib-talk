@@ -5,5 +5,7 @@ import org.springframework.http.HttpHeaders;
 public interface ConnectChatUseCase {
 
     HttpHeaders upgradeSocketHeaders(Long channelId);
+
+    void connect();
     void disConnect();
 }

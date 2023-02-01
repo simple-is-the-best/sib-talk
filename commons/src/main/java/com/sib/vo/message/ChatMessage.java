@@ -1,4 +1,4 @@
-package com.sib.chat.domain;
+package com.sib.vo.message;
 
 import lombok.Value;
 

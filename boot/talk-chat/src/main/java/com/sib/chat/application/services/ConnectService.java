@@ -1,5 +1,6 @@
 package com.sib.chat.application.services;
 
+import com.sib.cache.redis.application.port.out.ChannelCachePort;
 import com.sib.chat.application.config.EndpointConfig;
 import com.sib.chat.application.usecase.ConnectChatUseCase;
 import com.sib.utils.CustomHeader;
@@ -16,6 +17,7 @@ import java.net.URI;
 public class ConnectService implements ConnectChatUseCase {
 
     private final EndpointConfig endpoint;
+    private final ChannelCachePort cachePort;
 
     @Override
     public HttpHeaders upgradeSocketHeaders(Long channelId)  {
@@ -26,6 +28,10 @@ public class ConnectService implements ConnectChatUseCase {
             throw new RuntimeException("Message Server Connection Fail::ChannelId::"+channelId);
         }
         return generateWebSocketHeaders(channelId, redirectUri);
+    }
+
+    @Override
+    public void connect() {
     }
 
     @Override
