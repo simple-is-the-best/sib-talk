@@ -1,3 +1,4 @@
 dependencies {
+    implementation project(":boot:talk-message")
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }

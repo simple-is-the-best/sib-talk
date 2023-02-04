@@ -23,7 +23,7 @@ public class RedisCacheAdapter implements ChannelCachePort , TopicCachePort {
     public void setChannel(Long channelId) {
         ZSetOperations<String, String> zSet = redisUtils.opsForZSet();
         try {
-            zSet.add(redisUtils.channelKey(channelId), "", redisUtils.timeScore());
+            zSet.add(redisUtils.getChannelKey(channelId), "", redisUtils.getScoreOfTime());
         } catch (Exception e) {
             log.error("Redis Cashing Failure::Redis Key:{}::Error Message:{}", channelId, e.getMessage());
         }
@@ -34,7 +34,7 @@ public class RedisCacheAdapter implements ChannelCachePort , TopicCachePort {
         ZSetOperations<String, String> zSet = redisUtils.opsForZSet();
         try {
             String rawMessage = mapper.writeValueAsString(message);
-            zSet.add(redisUtils.channelKey(channelId), rawMessage, redisUtils.timeScore());
+            zSet.add(redisUtils.getChannelKey(channelId), rawMessage, redisUtils.getScoreOfTime());
         } catch (Exception e) {
             log.error("Redis SetMessage Failure::ChannelId:{}::Message:{}::Error Message:{}",
                     channelId, message, e.getMessage());
@@ -42,8 +42,8 @@ public class RedisCacheAdapter implements ChannelCachePort , TopicCachePort {
     }
 
     @Override
-    public void setTopic(Object delegate, String method, Long channelId) {
-        ChannelTopic topic = ChannelTopic.of(redisUtils.channelKey(channelId));
-        redisUtils.setAdapterTopic(delegate, method, topic);
+    public void setTopic(Long channelId) {
+        ChannelTopic topic = ChannelTopic.of(redisUtils.getChannelKey(channelId));
+        redisUtils.setAdapterTopic(topic);
     }
 }

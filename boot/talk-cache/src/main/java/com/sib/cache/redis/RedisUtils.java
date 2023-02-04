@@ -1,8 +1,13 @@
 package com.sib.cache.redis;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sib.cache.redis.config.RedisKey;
+import com.sib.vo.message.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.json.JsonParseException;
+import org.springframework.data.redis.connection.Message;
+import org.springframework.data.redis.connection.MessageListener;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.listener.ChannelTopic;
@@ -20,6 +25,9 @@ public class RedisUtils {
 
     private final RedisTemplate<String, String> redisTemplate;
     private final RedisMessageListenerContainer redisListenerContainer;
+    private final MessageListener messageListener;
+
+    private final ObjectMapper mapper;
 
     public ZSetOperations<String, String> opsForZSet() {
         return redisTemplate.opsForZSet();
@@ -29,17 +37,29 @@ public class RedisUtils {
         redisTemplate.convertAndSend(topic, message);
     }
 
-    public void setAdapterTopic(Object delegate, String method, ChannelTopic topic) {
-        MessageListenerAdapter adapter = new MessageListenerAdapter(delegate, method);
+    public void setAdapterTopic(ChannelTopic topic) {
+        MessageListenerAdapter adapter = new MessageListenerAdapter(messageListener, "onMessage");
         redisListenerContainer.addMessageListener(adapter, topic);
     }
 
-    public double timeScore() {
+    public double getScoreOfTime() {
         LocalDateTime now = LocalDateTime.now();
         return now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    public String channelKey(Long id) {
+    public String getChannelKey(Long id) {
         return RedisKey.PREFIX_CHANNEL + id;
+    }
+
+    public String convertToString(Message message) {
+        return redisTemplate.getStringSerializer().deserialize(message.getBody());
+    }
+
+    public ChatMessage convertToMessage(String message) {
+        try {
+            return mapper.readValue(message, ChatMessage.class);
+        } catch (Exception e) {
+            throw new JsonParseException();
+        }
     }
 }
