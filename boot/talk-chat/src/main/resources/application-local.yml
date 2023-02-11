@@ -18,4 +18,4 @@ spring:
 
 message:
   server:
-    end-point: ws://localhost:8101
+    end-point: http://localhost:8101

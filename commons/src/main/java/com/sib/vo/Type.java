@@ -1,4 +1,4 @@
-package com.sib.vo.message;
+package com.sib.vo;
 
 public enum Type {
     TEXT

@@ -1,0 +1,18 @@
+package com.sib.utils.generator;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+public class RedisConst {
+
+    public final static String PREFIX_CHANNEL = "channel:";
+
+    public static double ScoreOfTime() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    public static String ChannelKey(Long id) {
+        return PREFIX_CHANNEL + id;
+    }
+}

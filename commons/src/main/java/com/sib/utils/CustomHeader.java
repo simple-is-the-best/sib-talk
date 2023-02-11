@@ -1,7 +1,7 @@
 package com.sib.utils;
 
 public enum CustomHeader {
-    CHANNEL_CONNECTION("X-Connect-Channel");
+    CHANNEL_CONNECTION("Connect-Channel-Topic");
 
     private final String value;
 

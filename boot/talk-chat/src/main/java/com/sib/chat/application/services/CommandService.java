@@ -1,7 +1,6 @@
 package com.sib.chat.application.services;
 
-import com.sib.cache.redis.application.port.out.ChannelCachePort;
-import com.sib.cache.redis.application.port.out.TopicCachePort;
+import com.sib.chat.application.port.out.cache.ChannelCachePort;
 import com.sib.chat.application.port.out.persistence.CreateChatPort;
 import com.sib.chat.application.usecase.CreateChatUseCase;
 import com.sib.chat.application.usecase.DeleteChatUseCase;
@@ -21,7 +20,6 @@ public class CommandService implements CreateChatUseCase, DeleteChatUseCase {
 
     private final CreateChatPort createPort;
     private final ChannelCachePort channelCachePort;
-    private final TopicCachePort topicCachePort;
 
     @Override
     public Response.Create create(Request.Create request) {
@@ -29,7 +27,6 @@ public class CommandService implements CreateChatUseCase, DeleteChatUseCase {
 
         Long channelId = saved.getChannel().getId();
         channelCachePort.setChannel(channelId);
-        topicCachePort.setTopic(channelId);
         return new Response.Create(saved.getId(), channelId);
     }
 
