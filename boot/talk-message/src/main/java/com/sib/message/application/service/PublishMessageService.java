@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sib.message.application.port.out.cache.ChannelCachePort;
 import com.sib.message.application.port.out.cache.PublishCachePort;
 import com.sib.message.application.usecase.PublishMessageUseCase;
+import com.sib.message.application.usecase.dto.Request;
 import com.sib.utils.generator.RedisConst;
 import com.sib.vo.ChatMessage;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,15 @@ public class PublishMessageService implements PublishMessageUseCase {
     private final ObjectMapper mapper;
 
     @Override
-    public void publish(ChatMessage message, Long channelId) {
+    public void publish(Request.Message message, Long channelId) {
+        ChatMessage chatMessage = message.convert(channelId);
         String pubMessage;
         try {
-            pubMessage = mapper.writeValueAsString(message);
+            pubMessage = mapper.writeValueAsString(chatMessage);
         } catch (Exception e) {
-            throw new RuntimeException("Json Passer Exception Object is::"+message);
+            throw new RuntimeException("Json Passer Exception Object is::"+chatMessage);
         }
-        channelCachePort.addMessage(channelId, message);
+        channelCachePort.addMessage(channelId, chatMessage);
         publishCachePort.publish(RedisConst.ChannelKey(channelId), pubMessage);
     }
 }

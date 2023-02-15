@@ -42,9 +42,18 @@ public interface Response {
         private ChatMessage lastChatMessage;
         private LocalDateTime createdAt;
 
-        public Response.Chat convert(com.sib.chat.domain.Chat chat) {
+        public static Response.Chat convert(com.sib.chat.domain.Chat chat) {
             Channel channel = chat.getChannel();
             List<ChatMessage> chatMessages = channel.getChatMessages();
+            if(chatMessages.isEmpty()) {
+                return new Response.Chat(
+                        chat.getId(),
+                        channel.getId(),
+                        channel.getTitle(),
+                        null,
+                        chat.getCreatedAt()
+                );
+            }
             int lastIndex = chatMessages.size() - 1;
             return new Response.Chat(
                     chat.getId(),

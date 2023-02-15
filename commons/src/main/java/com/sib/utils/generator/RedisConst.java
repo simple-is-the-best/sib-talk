@@ -6,6 +6,7 @@ import java.time.ZoneId;
 public class RedisConst {
 
     public final static String PREFIX_CHANNEL = "channel:";
+    public final static String WELCOME_MESSAGE = "welcome";
 
     public static double ScoreOfTime() {
         LocalDateTime now = LocalDateTime.now();

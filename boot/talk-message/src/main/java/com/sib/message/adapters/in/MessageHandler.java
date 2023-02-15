@@ -1,7 +1,7 @@
 package com.sib.message.adapters.in;
 
 import com.sib.message.application.usecase.PublishMessageUseCase;
-import com.sib.vo.ChatMessage;
+import com.sib.message.application.usecase.dto.Request;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -17,7 +17,7 @@ public class MessageHandler {
     private final PublishMessageUseCase publishMessageUseCase;
 
     @MessageMapping("/channel/{channelId}")
-    public void onMessage(@Payload ChatMessage message,
+    public void onMessage(@Payload Request.Message message,
                           @DestinationVariable long channelId) {
         publishMessageUseCase.publish(message, channelId);
     }

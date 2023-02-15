@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/apis/v1")
+@RequestMapping("/api/v1")
 @RestController
 public class CommandChatController {
 
     private final CreateChatUseCase createUseCase;
     private final DeleteChatUseCase deleteUseCase;
 
-    @PutMapping("/chat")
+    @PutMapping("/chats")
     public ResponseEntity<Response.Create> create(@RequestBody Request.Create request) {
         Response.Create created = createUseCase.create(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @DeleteMapping("/chat/{chatId}")
+    @DeleteMapping("/chats/{chatId}")
     public void delete(@PathVariable Long chatId) {
         deleteUseCase.delete(chatId);
     }

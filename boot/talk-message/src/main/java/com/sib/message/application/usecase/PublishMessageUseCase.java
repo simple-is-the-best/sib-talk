@@ -1,7 +1,7 @@
 package com.sib.message.application.usecase;
 
-import com.sib.vo.ChatMessage;
+import com.sib.message.application.usecase.dto.Request;
 
 public interface PublishMessageUseCase {
-    void publish(ChatMessage message, Long channelId);
+    void publish(Request.Message message, Long channelId);
 }
