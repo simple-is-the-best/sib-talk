@@ -13,7 +13,7 @@ public class RedisConst {
         return now.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    public static String ChannelKey(Long id) {
+    public static String ChannelKey(long id) {
         return PREFIX_CHANNEL + id;
     }
 }

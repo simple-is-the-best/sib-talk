@@ -21,7 +21,7 @@ public class PublishMessageService implements PublishMessageUseCase {
     private final ObjectMapper mapper;
 
     @Override
-    public void publish(Request.Message message, Long channelId) {
+    public void publish(Request.Message message, long channelId) {
         ChatMessage chatMessage = message.convert(channelId);
         String pubMessage;
         try {

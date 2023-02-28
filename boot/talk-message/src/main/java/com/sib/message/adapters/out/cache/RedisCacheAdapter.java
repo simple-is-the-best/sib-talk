@@ -27,7 +27,7 @@ public class RedisCacheAdapter implements ChannelCachePort, PublishCachePort, Me
     private final ObjectMapper mapper;
 
     @Override
-    public void addMessage(Long channelId, ChatMessage message) {
+    public void addMessage(long channelId, ChatMessage message) {
         ZSetOperations<String, String> zSet = redisTemplate.opsForZSet();
         try {
             String rawMessage = mapper.writeValueAsString(message);

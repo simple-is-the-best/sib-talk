@@ -4,5 +4,5 @@ import com.sib.vo.ChatMessage;
 
 public interface ChannelCachePort {
 
-    void addMessage(Long channelId, ChatMessage message);
+    void addMessage(long channelId, ChatMessage message);
 }

@@ -20,7 +20,7 @@ public interface Request {
         private String sendAt;
         private String content;
 
-        public ChatMessage convert(Long channelId) {
+        public ChatMessage convert(long channelId) {
             return new ChatMessage(
                     IdGenerator.nextId(),
                     Type.valueOf(this.type),

@@ -41,6 +41,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/connect")
                 .setAllowedOriginPatterns("*");
 //                .withSockJS();
-//                .setClientLibraryUrl("<https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js>");
     }
 }

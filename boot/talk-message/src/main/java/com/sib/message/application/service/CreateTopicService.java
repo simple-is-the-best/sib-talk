@@ -23,7 +23,7 @@ public class CreateTopicService implements CreateTopicUseCase {
         listenerContainer.addMessageListener(listenerAdapter, getChannelTopic(channelId));
     }
 
-    private ChannelTopic getChannelTopic(Long channelId) {
-        return ChannelTopic.of(PREFIX_CHANNEL+ channelId.toString());
+    private ChannelTopic getChannelTopic(long channelId) {
+        return ChannelTopic.of(PREFIX_CHANNEL+ channelId);
     }
 }
